@@ -13,6 +13,12 @@ const App = () => {
         {id: uuidv4(), text: 'Cucumber'},
     ]);
 
+    const addItem = (newItemName) => {
+        setItems(prevItems => {
+            return [...items, {id: uuidv4(), text: newItemName}];
+        });
+    }
+
     const deleteItem = (id) => {
         setItems(prevItems => {
             return prevItems.filter(item => item.id != id);
@@ -22,7 +28,7 @@ const App = () => {
     return (
         <View style={styles.container}>
             <Header/>
-            <AddItem/>
+            <AddItem addItem={addItem}/>
             <FlatList data={items}
                       renderItem={({item}) => <ListItem item={item} deleteItem={deleteItem}/>}
             />
