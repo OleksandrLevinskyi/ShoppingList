@@ -7,10 +7,21 @@ const AddItem = ({addItem}) => {
 
     const onChange = (textValue) => setText(textValue);
 
+    const tryToAddItem = () =>{
+        if(addItem(text)){
+            setText('');
+            this.textInput.clear();
+        }
+    }
+
     return (
         <View>
-            <TextInput placeholder="Item Name" style={styles.input} onChangeText={onChange}/>
-            <TouchableOpacity style={styles.btn} onPress={() => addItem(text)}>
+            <TextInput placeholder="Item Name"
+                       style={styles.input}
+                       ref={input => {this.textInput = input}}
+                       onChangeText={onChange}/>
+            <TouchableOpacity style={styles.btn}
+                              onPress={tryToAddItem}>
                 <Text style={styles.btnText}>
                     <Icon name="plus" size={20}/>
                     Add Item

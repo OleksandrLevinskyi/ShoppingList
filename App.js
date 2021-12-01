@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Alert} from 'react-native';
 import {v4 as uuidv4} from 'uuid';
 import Header from './components/Header';
 import ListItem from './components/ListItem';
@@ -14,9 +14,15 @@ const App = () => {
     ]);
 
     const addItem = (newItemName) => {
+        if (!newItemName) {
+            Alert.alert('Error', 'Please enter a valid item name (name cannot be empty)', {text: 'OK'});
+            return false;
+        }
+
         setItems(prevItems => {
             return [...items, {id: uuidv4(), text: newItemName}];
         });
+        return true;
     }
 
     const deleteItem = (id) => {
@@ -30,7 +36,9 @@ const App = () => {
             <Header/>
             <AddItem addItem={addItem}/>
             <FlatList data={items}
-                      renderItem={({item}) => <ListItem item={item} deleteItem={deleteItem}/>}
+                      renderItem={
+                          ({item}) => <ListItem item={item} deleteItem={deleteItem}/>
+                      }
             />
         </View>
     );
